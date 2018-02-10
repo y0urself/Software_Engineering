@@ -19,6 +19,9 @@
   * [Programmablaufplan](#programmablaufplan)
   * [Struktogramm](#struktogramm)
   * [Strukturierte Analyse](#strukturierte-analyse)
+  * [EBNF und Syntaxdiagramm](#ebnf-und-syntaxdiagramm)
+  * [Entity-Relationship-Diagramm](#entity-relationship-diagramm)
+  * [Funktionsbaum](#funktionsbaum)
 * [UML](#uml)
   * [Strukturdiagramme](#strukturdiagramme)
   * [Verhaltensdiagramme](#verhaltensdiagramme)
@@ -620,7 +623,7 @@ Vielfalt der Modellierungskonzepte
 |Zustandsorientierte Modellierung| Zustand, Nebenläufigkeit z. B. Zustandsübergangsdiagramm, Petri-Netz|
 |Funktionsorientierte Modellierung| Funktionshierarchie z. B. [Funktionsbaum](#funktionsbaum)|
 |Datenflussorientierte Modellierung| z. B. SA ([Structured Analysis](#strukturierte-analyse)) vonDeMarco (1978/79)|
-|Datenstrukturorientierte Modellierung| z. B. ERM (Entity Relationship Model) von Chen (1976), Syntaxdiagramm|
+|Datenstrukturorientierte Modellierung| z. B. ERM ([Entity Relationship Model](#entity-relationship-diagramm)) von Chen (1976), Syntaxdiagramm|
 |Szenariobasierte Modellierung| Interaktionsstrukturen z. B. Interaktionsdiagramme|
 |[Objektorientierte Modellierung](#objektorientierte-modelle)| Klassenstrukturen z. B. [Klassendiagramm](#klassendiagramm) mit [UML](#uml) (Unified Modeling Language) von Booch, Rumbaugh, Jacobson (1996)|
 |Geschäftsprozessorientierte Modellierung| z. B. ARIS (Architektur integrierter Informationssysteme) von Scheer (1988) oder Workflow-Modelle wie BPEL|
@@ -683,7 +686,8 @@ Gründe und Probleme wohl offensichtlich
   
 _Beispiel_
   * Aufgabenblatt = {Aufgabe}
-  * Aufgabe = Text, Musterlösung, Bewertungskriterien (für Tutoren)
+  * Aufgabe = Text + Musterlösung + Bewertungskriterien (für Tutoren)
+  * Adresse = [ Straße + Haus-Nr. | Postfachnummer ] + ( Länderkennzeichen ) + PLZ + Ort + ( Telefon ) + ( Fax )
 
 ##### Minispezifikation
   * z.B. Pseudocode, [PAP](#projektablaufplan)
@@ -692,6 +696,47 @@ _Beispiel_
 [nach oben](#software-engineering)
 
 ---
+
+### EBNF und Syntaxdiagramm
+
+* zwei wichtige Beschreibungsformalismen für Datenstrukturen
+  
+#### Erweiterte Backus-Naur-Form (EBNF)
+(Informatik D)
+
+`x→y|y′|y′′`
+* wie in BNF drei Regeln `x→y` und `x→y′` und `x→y′′`.
+
+`x→y[z]y′`
+* `z`ist optional, d.h. zwei Regeln `x→yy′` und `x→yzy′`.
+
+`x→y{z}y′`
+* `z`kommt beliebig oft (auch 0-mal) vor `x → y[Z]y′` und `Z → z[Z]`.
+
+[nach oben](#software-engineering)
+
+---
+
+#### Syntaxdiagramme
+  
+[nach oben](#software-engineering)
+
+---
+
+### Entity-Relationship-Diagramm
+(Datenbanksysteme)
+
+- `1:1`, `1:n`, `m:n` - Beziehungen
+- Entities haben Attribute
+- Relationships zwischen Entities,
+    - schwache Relationship bei 1:1 oder 1:n möglich
+    - mehrwertige Relationen
+#### Schlüssel
+- Schlüsselkandidat (Attribut(e) als Schlüssel)
+- Primärschlüssel (künstlicher Schlüssel, ID)
+- min-max-Notation
+- Generalisierung ("is-a")
+- Konsolidierung -> Anwendersichten konsolidieren -> Widerspruchsfrei, redundanzfrei, keine Synonyme, Homonyme
 
 ### Funktionsbaum
 
@@ -730,14 +775,45 @@ _Beispiel_
 ---
 
 ## Strukturdiagramme
+(Definition Skript)
 
 ### Klassendiagramm
+(class diagrams): beschreiben den strukturellen Aufbau eines Systems aus Klassen.
+### Objektdiagramme
+(object diagrams): beschreiben zu einem bestimmten Zeitpunkt die Menge der existierenden Objekte samt Attributwerten und ihrer Beziehungen (Snapshot).
+### Paketdiagramme
+(package diagrams): stellen die Strukturierung der Klassen eines Systems durch Pakete dar (Gruppierung, Subsystembildung).
+### Komponentendiagramme und Kompositionsstrukturdiagramme
+(component diagrams) und (composite structure diagram): beschreiben den strukturellen Aufbau auf höherer Abstraktion (Architektur).
+### Verteilungsdiagramme
+(deployment diagram): zeigen die Verteilung eines Systems auf Hardware-Einheiten.
 
 [nach oben](#software-engineering)
 
 ---
 
 ## Verhaltensdiagramme
+(Definition Skript)
+### Anwendungsfalldiagramme
+(use case diagrams): beschreiben aus Benutzersicht, was ein System leisten soll
+### Zustandsdiagramme
+(state machine diagrams): beschreiben das zustandsabhängige Verhalten von Objekten
+### Aktivitätsdiagramme
+(activity diagrams): dienen zur Beschreibung von Abläufen im System
+### Interaktionsdiagramme
+(interaction diagrams): beschreiben die dynamischen Interaktionen und Abhängigkeiten der Systemelemente im Ablauf
+### Sequenzdiagramme
+(sequence diagrams): zeigen exemplarisch die Interaktion einer Menge von Objekten.
+### Zeitdiagramme
+(timing diagrams): mischen Zustands - und Sequenzdiagramme, um den Objektzustand über eine Zeitspanne hinweg darzustellen
+(mit den zustandsverändernden Nachrichten).
+### Interaktionsübersichtsdiagramme
+(interaction overview diagrams): sind Aktivitätsdiagramme, in dem Teilabläufe durch referenzierte oder eingebettete Sequenzdiagramme repräsentiert sind
+(Verknüpfung von Sequenzdiagrammen mit Hilfe eines umgebenden Aktivitätsdiagramms; in der Praxis eher selten).
+### Kommunikationsdiagramme
+(communication diagrams): zeigen Kommunikations-/Kollaborationsbeziehungen zwischen Objekten zur Laufzeit.
+
+
 #### UML-Sequenzdiagramme:
 * if/else, nur if (optional)
 * asynchron, synchrone Antwort
