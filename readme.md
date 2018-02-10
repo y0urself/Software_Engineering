@@ -15,7 +15,10 @@
   * [Make](#make)
   * [Maven](#maven)
   * [Ant](#ant)
-* [Programmablaufplan, Struktogramm](#programmablaufplan-struktogramm)
+* [Software-Modelle](#software-modelle)
+  * [Programmablaufplan](#programmablaufplan)
+  * [Struktogramm](#struktogramm)
+  * [Strukturierte Analyse](#strukturierte-analyse)
 * [UML](#uml)
   * [Strukturdiagramme](#strukturdiagramme)
   * [Verhaltensdiagramme](#verhaltensdiagramme)
@@ -95,8 +98,14 @@ Invariants (C4J):
 * Method (Modul)                may assume precondition and must ensure postcondition
 -> Invariante gilt immer, außer wenn Prozeduren, Methoden, Funktionen ausgeführt werden
 
-@Java:
+_@Java_:
 `java -ea (enable assertions) -javaagent:$(lib_path)/$(lib_name)`
+
+`@` in comment: _Java-Annotationen_
+z.B. `@goal` ...
+
+Observer beobachtet Observable, wird benachrichtig, wenn irgendwas sich ändert
+* `notifyAll()`, `notifyObservers()`
 
 [nach oben](#software-engineering)
 
@@ -371,30 +380,72 @@ Einleitung -> Management -> Aktivitäten -> Zeitplan -> Ressourcen -> Pflege
 * copy-modify-merge
   * Arbeiten auf der Kopie, Konflikte mergen
 
-### SVN:
+#### Release-Management
+  * Hauptrelease
+  * Wartungsrelease
+  * Patch
+  * Releaseplan (?)
 
-(?)
+### [SVN](http://subversion.apache.org)
+
+* Repository, Revisionen
+* Transaktion = Schreiben in Repository
+  * erhält Revisionsnummer
+* Revision ist immer das Gesamtabbild des Systems
+  * keine Versionsnummern für einzelne Dateien oder Verzeichnisse
+* keine "echten" Tags und Branches
+  * Branch als "Kopie"
+  
+  #### Kommandos für Konsole:
+  * `svn <command> [<option[s]>][<target>]`
+
 
 
 [nach oben](#software-engineering)
 
 ---
 
-### GIT:
+### [GIT](http://git-scm.com)
+
+* "Speicherung von Versionen in Snapshots, nicht in Deltas" - Pulvermüller 2017
+  * Aber: [the truth](https://stackoverflow.com/questions/8198105/how-does-git-store-files/8198276#8198276)
+* benötigt keinen zentralen Server
+
+[nach oben](#software-engineering)
+
+---
+
+### Commands
+Beschreibung  | git | SVN |
+|-----|-----|-----|
+|Anlegen eines neuen, leeren Quell-Repositories  | `git init --bare` | `svnadmin create dir`, `svn checkout} file://path/dir`|
+|Kopieren in ein neues Arbeitsverzeichnis | `git clone dir.git`| `svn checkout dir` |
+| Aktualisierung eines bestehenden Arbeitsverzeichnisses| `git pull` | `svn update`|
+|Hinzufügen von Dateien und | `git add file*regex*dir` | `svn add file*regex*dir`|
+| Verzeichnissen in die Versionskontrolle | `git commit -m 'meh'` | `svn commit -m 'meh'`, `git push`|
+| Rückgängig machen von lokalen Änderungen | `'git reset --soft HEAD\^`, `git reset HEAD\^ *regex` | `{svn revert} file*regex` |
+| Übertragen von Änderungen in das Quell-Repository |`git push` | `svn commit -m 'meh'`|
+| Verschieben, Löschen und |`git rm option file*` | `svn delete *regex`|
+| Umbenennen von Dateien und Verzeichnissen | `git mv option file*` | `svn move *regex`, `svn delete`|
+| Erzeugen von Branches | `git checkout -b branch` | `svn copy /branches/new`|
+| Erzeugen von Tags | `git tag -a 'v1' -m 'meh'` | `svn copy ...`|
+| Zusammenführen eines Branches mit dem Hauptentwicklungspfad mit unterschiedlichen Änderungen in derselben Datei| `git checkout master`,` git merge branch` |`svn merge /trunk -r3:HEAD`|
+
 
 * Tags
   * einfache Tags, Referenz auf Commit
   * kommentierte Tags, "Zwitter zwischen Commit & Branch"
 
-**JAVA**
-  `@` in comment: _Java-Annotationen_
-  z.B. `@goal` ...
   
   [nach oben](#software-engineering)
   
   ---
 
 ## Buildmanagement:
+
+* automatisierung des Build-Prozesses
+* Dokumentation
+* clear, ...
 
 * **Make** und **Ant** sind _imperativ_
 * **Maven** ist _deklarativ_
@@ -470,12 +521,58 @@ rm -rf jar.jar
 | `mvn compile` |kompiliert den Kram|
 | `mvn validate` ||
 | `mvn package`| mache ein Package daraus|
-| `mvn test`||
+| `mvn test`| ablaufen der Tests mit JUnit|
 | `mvn integration test` |teste ob es integriert funktioniert|
 | `mvn varify` |ist das erstelle korrekt? Prüfsumme, ...|
 | `mvn install` | frimelt es aus dem Maven Repository raus|
 | `mvn site` | Erstellt eine Internetseite `documentation`|
 | `mvn clean`| |
+
+_Beispiel_ Maven Plugin
+```Java
+package de.uos.swe;
+
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+
+/**
+* @goal message
+*/
+public class MyMojo extends AbstractMojo {
+  /**
+  * @parameter property="message"
+  */
+  private String message="Hello!";
+
+  public void execute() throws MojoExecutionException {
+    getLog().info(message);
+  }
+}
+```
+
+_Beispiel_ `pom.xml`
+```xml
+<build>
+  <plugins>
+    <plugin>
+      <groupId>de.uos.swe</groupId>
+      <artifactId>simple-maven-plugin</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <executions>
+      <execution>
+      <phase>compile</phase>
+      <goals>
+        <goal>message</goal>
+      </goals>
+      <configuration>
+        <message>I am alive!</message>
+      </configuration>
+      </execution>
+      </executions>
+    </plugin>
+  </plugins>
+</build>
+```
 
 [nach oben](#software-engineering)
 
@@ -489,7 +586,7 @@ rm -rf jar.jar
   * in Javadoc: `@parameter property="message"`
 * plugin einbauen
 
-### Ant:
+### [Ant](http://ant.apache.org/manual/):
 * von Apache
 * moderner als make
 * XML
@@ -512,42 +609,94 @@ TAB := `->|`
 
 ---
 
-## Programmablaufplan, Struktogramm
-* Heron-Verfahren?
-* total einfach
-* Struktogram: Structorizer
-* Programmablaufplan: TBBT Staffel 2 Folge 13
-  * Freundschaftsalgorithmus von Sheldon
-  * -> Info C?!
-  * -> Start Ende Rund
-  * -> Ausgabe/Eingabe Paralelogramm ...
+## Software-Modelle
 
+Vielfalt der Modellierungskonzepte
+
+|Modellierungsart| Beispiel|
+|----|----|
+|Algorithmenorientierte Modellierung| Kontrollstrukturen z. B. [Programmablaufplan](#programmablaufplan), [Struktogramm](#struktogramm), Pseudocode|
+|Regelbasierte Modellierung| Wenn-Dann-Beziehungen z. B. Entscheidungstabelle, Regel|
+|Zustandsorientierte Modellierung| Zustand, Nebenläufigkeit z. B. Zustandsübergangsdiagramm, Petri-Netz|
+|Funktionsorientierte Modellierung| Funktionshierarchie z. B. [Funktionsbaum](#funktionsbaum)|
+|Datenflussorientierte Modellierung| z. B. SA ([Structured Analysis](#strukturierte-analyse)) vonDeMarco (1978/79)|
+|Datenstrukturorientierte Modellierung| z. B. ERM (Entity Relationship Model) von Chen (1976), Syntaxdiagramm|
+|Szenariobasierte Modellierung| Interaktionsstrukturen z. B. Interaktionsdiagramme|
+|[Objektorientierte Modellierung](#objektorientierte-modelle)| Klassenstrukturen z. B. [Klassendiagramm](#klassendiagramm) mit [UML](#uml) (Unified Modeling Language) von Booch, Rumbaugh, Jacobson (1996)|
+|Geschäftsprozessorientierte Modellierung| z. B. ARIS (Architektur integrierter Informationssysteme) von Scheer (1988) oder Workflow-Modelle wie BPEL|
+|Formale Modellierung| z. B. Automaten, Petri-Netze, Algebraische Spezifikation, Z, Temporale Logik, Prozessalgebra|
+|Spezielle Modellierungssprachen| z. B. für spezielle Aufgaben wie Echzeitsysteme (z. B. Realtime-UML) oder unternehmensspezifisch|
+
+Gründe und Probleme wohl offensichtlich
+
+### Programmablaufplan
+= FlowChart = Flussdiagramm
+
+* "wie" statt "was"
+* ungeeignet für große Systeme
+
+* endlicher gerichteter knotenmarkierter Graph
+* Startknoten und Endknoten nicht vergessen (rund)
+* Condition (caro)
+* Ausgabe/Eingabe (Parallelogramm)
+
+
+### Struktogramm
+= Nassi-Shneidermann-Diagramme
+
+* Struktogramm: Structorizer.app
+* programmiersprachenunabhängige Logikdarstellung
+
+* bedingte Anweisung und Fallunterscheidung in einem `v`
+* Schleifen (Ein oder Austrittsprüfung)
+* infinity-Loop
+
+* verschachtelbar
+* lineare Kontrollstrukturen
+* aufwendig zu Zeichnen
 
 [nach oben](#software-engineering)
 
 ---
 
-
-# 08.12.2017 - Übung 07:
-
-**Strukturierte Analyse** [DFD = Datenflussdiagramm]
+### Strukturierte Analyse
+#### Datenflussdiagramm (DFD)
 * Menge von DFDs, Dateilexikon, Minispezifikationen
-  * genau ein Übersicht DFD (kein Datenspeicher, ein Prozess)
-  * ein- oder mehrere Verfeinerungs-DFDs (1 pro Prozess, keine Terminatoren)
+  * genau _ein_ Übersicht DFD (kein Datenspeicher, ein Prozess)
+  * ein- oder mehrere Verfeinerungs-DFDs (1 pro Prozess, _keine_ Terminatoren)
     * Verfeinerungs-DFD sind konsistent zum Übersichts-DFD
-  * Terminatoren und Datenspeucher nur über Prozesse verbinden
-  * Datenlexikon
-    * endliche Menge Datendefinitionen
-      * *BEISPIEL:*
-        * Aufgabenblatt = {Aufgabe}
-        * Aufgabe = Text, Musterlösung, Bewertungskriterien (für Tutoren)
-  * Minispezifikation
-    * z.B. Pseudocode, PAP
+  * Terminatoren (eckig) und Datenspeicher (parallelen) nur über Prozesse (rund) verbinden
+
+
+##### Datenlexikon
+* endliche Menge Datendefinitionen
+
+|Art | Symbol |
+|----|----|
+|Datenausdruck, der sich durch die Operationen definiert durch | =|
+|Produkt (Sequenzbildung, „und“) | + |
+|Iteration (Wiederholung) |  { . . . } |
+|Wiederholung von M bis N | M{ . . . }N |
+|Selektion (Auswahl, „entweder...oder...“)|  [ . . . | . . . | . . . ] |
+|Option | ( ... ) |
+|Kommentar |* . . . *|
+  
+_Beispiel_
+  * Aufgabenblatt = {Aufgabe}
+  * Aufgabe = Text, Musterlösung, Bewertungskriterien (für Tutoren)
+
+##### Minispezifikation
+  * z.B. Pseudocode, [PAP](#projektablaufplan)
     * formlos
 
-* Observer beobachtet Observable, wird benachrichtig, wenn irgendwas sich ändert
-  * notifyAll, notifyObservers
+[nach oben](#software-engineering)
 
+---
+
+### Funktionsbaum
+
+* systematische Gliederung einer Vielzahl von Funktionen
+* sehr oberflächlich
 
 [nach oben](#software-engineering)
 
@@ -559,9 +708,9 @@ TAB := `->|`
 | Diagrammtyp | Beschreibung |
 |-------------|---|
 |**Strukturdiagramme**||
-| Klassendiagramme | Modellierung der Einzelklasse mit _Attributen_ und _Parametern_, sowie _Beziehungen_ untereinander |
-| Objektdiagramme | Ausschnitt zu gewissem Zeitpunkt von _Objekt(instanzen)_ im System und ihre Beziehungen zueinander |
-| Paketdiagramme | Strukturierung des Systems nach ihren Paketen |
+| Klassendiagramm | Modellierung der Einzelklasse mit _Attributen_ und _Parametern_, sowie _Beziehungen_ untereinander |
+| Objektdiagramm | Ausschnitt zu gewissem Zeitpunkt von _Objekt(instanzen)_ im System und ihre Beziehungen zueinander |
+| Paketdiagramm | Strukturierung des Systems nach ihren Paketen |
 | Komponentendiagramm | Komponenten mit _gekapselter Funktionalität_ nach außen abgrenzen |
 | Kompositionsstrukturdiagramm | Komponenten tw. durchlässig von innen nach außen ... |
 | Verteilungsdiagramm | Es zeigt eine bestimmte Sicht auf die Struktur des modellierten Systems |
@@ -582,7 +731,7 @@ TAB := `->|`
 
 ## Strukturdiagramme
 
-
+### Klassendiagramm
 
 [nach oben](#software-engineering)
 
@@ -697,6 +846,16 @@ __auf Konsistenz achten!__
 
 * rational Unify Process
 
+
+
+
+#### evolutionäre Modelle
+* Grundsystem - dann neues System mit Änderungen - wieder neues System mit nächsten Änderungen (Immer neu)
+#### inkrementelle Modelle (gut geplant!)
+* Kernsystem - weitere Ausbaustufen hinzufügen
+#### iterative Modelle
+* arbeiten im selben System - nicht wie in evolutionär immer neu implementiert
+
 ## Agile Modelle
 
 ### Agiles Manifest
@@ -764,13 +923,6 @@ Design  |   Implementation    |   Test|
     * bla
 
 
-
-* evolutionäre Modelle
-  * Grundsystem - dann neues System mit Änderungen - wieder neues System mit nächsten Änderungen (Immer neu)
-* inkrementelle Modelle (gut geplant!)
-  * Kernsystem - weitere Ausbaustufen hinzufügen
-* iterative Modelle
-  * arbeiten im selben System - nicht wie in evolutionär immer neu implementiert
 
 
 [nach oben](#software-engineering)
