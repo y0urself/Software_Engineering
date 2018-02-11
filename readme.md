@@ -25,6 +25,18 @@
 * [UML](#uml)
   * [Strukturdiagramme](#strukturdiagramme)
   * [Verhaltensdiagramme](#verhaltensdiagramme)
+* [Vorgehenmodelle](#vorgehensmodelle)
+  * [Code & Fix](#code--fix)
+  * [Wasserfallmodell](#wasserfallmodell)
+  * [V-Modell](#v-modell)
+  * [Rapid Prototyping](#rapid-prototyping)
+* [Prozessmodelle](#prozessmodelle)
+  * [Agile Modelle](#agile-modelle)
+    * [Agiles Manifest](#agiles-manifest)
+    * [Best Practices](#best-practices)
+    * [extreme Programming](#extrme-programming)
+    * [Scrum](#scrum)
+    * [Kanban](#kanban)
 
 ---
 
@@ -164,7 +176,7 @@ Observer beobachtet Observable, wird benachrichtig, wenn irgendwas sich ändert
 |E| Netzplan zeichnen            |    D      |  40 Minuten
 |F| Gantt-Diagramm                |   D       | 30 Minuten
 |G| Organisationsformen          |    A      |  10 Minuten
-|H| Fragen der Tutoren vorbereiten       ||     30 Minuten
+|H| Fragen der Tutoren vorbereiten   ||     30 Minuten
 
 [nach oben](#software-engineering)
 
@@ -779,7 +791,7 @@ _Beispiel_
 
 ### Klassendiagramm
 (class diagrams): beschreiben den strukturellen Aufbau eines Systems aus Klassen.
-### Objektdiagramme
+### [Objektdiagramme](#objektdiagramm)
 (object diagrams): beschreiben zu einem bestimmten Zeitpunkt die Menge der existierenden Objekte samt Attributwerten und ihrer Beziehungen (Snapshot).
 ### Paketdiagramme
 (package diagrams): stellen die Strukturierung der Klassen eines Systems durch Pakete dar (Gruppierung, Subsystembildung).
@@ -796,13 +808,13 @@ _Beispiel_
 (Definition Skript)
 ### Anwendungsfalldiagramme
 (use case diagrams): beschreiben aus Benutzersicht, was ein System leisten soll
-### Zustandsdiagramme
+### [Zustandsdiagramme](#zustandsdiagramm)
 (state machine diagrams): beschreiben das zustandsabhängige Verhalten von Objekten
 ### Aktivitätsdiagramme
 (activity diagrams): dienen zur Beschreibung von Abläufen im System
 ### Interaktionsdiagramme
 (interaction diagrams): beschreiben die dynamischen Interaktionen und Abhängigkeiten der Systemelemente im Ablauf
-### Sequenzdiagramme
+### [Sequenzdiagramme](#sequenzdiagramm)
 (sequence diagrams): zeigen exemplarisch die Interaktion einer Menge von Objekten.
 ### Zeitdiagramme
 (timing diagrams): mischen Zustands - und Sequenzdiagramme, um den Objektzustand über eine Zeitspanne hinweg darzustellen
@@ -810,15 +822,16 @@ _Beispiel_
 ### Interaktionsübersichtsdiagramme
 (interaction overview diagrams): sind Aktivitätsdiagramme, in dem Teilabläufe durch referenzierte oder eingebettete Sequenzdiagramme repräsentiert sind
 (Verknüpfung von Sequenzdiagrammen mit Hilfe eines umgebenden Aktivitätsdiagramms; in der Praxis eher selten).
-### Kommunikationsdiagramme
+### [Kommunikationsdiagramme](#kommunikationsdiagramm)
 (communication diagrams): zeigen Kommunikations-/Kollaborationsbeziehungen zwischen Objekten zur Laufzeit.
 
+---
 
-#### UML-Sequenzdiagramme:
+#### Sequenzdiagramm
 * if/else, nur if (optional)
 * asynchron, synchrone Antwort
 
-#### UML-Kommunikationsdiagramm:
+#### Kommunikationsdiagramm
 * (Instanzname):FieldController
 * **Nummerierung**:
     *     sequenzielle Nummerierung   1, 2, 3 ..
@@ -826,25 +839,20 @@ _Beispiel_
     *     geschachtelte Nummerierung  1.1, 1.1.1
     *     parallele Nummerierung      1a, 1b
     
-#### UML-Objektdiagramm
+### Objektdiagramm
   * Variable dessen Zustand ungewiss ist, werden mit ihrem Typ dargestellt
     * ansonsten ihren Wert eintragen
 
-#### UML-Zustandsdiagramm
+### Zustandsdiagramm
   * Terminationszustand
 
-* use-case-Point Methodede
+* use-case-Point Methode
 
 [nach oben](#software-engineering)
 
 ---
 
-# 22.12.2017 - Übung 09:
-
-# 19.01.2018 - Übung 10:
-
-
-## Vorgehensmodell
+## Vorgehensmodelle
 
 * allgemeine Art des Vorgehens für ein Projekt
 
@@ -852,9 +860,16 @@ _Beispiel_
 
 * Phase I: Erstellt eine Version
 * Phase II: Änderungsphase - so lange bis fertig
-* Schlecht: Kunde ist quasi der Tester
+* Phase III: Wartung nach Auslieferung
+* Phase IV: Außerbetriebsetzung
 
-### Wasserfall Modell:
+* Schlecht: Kunde ist quasi der Tester (Zyklus Phase II & III)
+
+[nach oben](#software-engineering)
+
+---
+
+### Wasserfallmodell:
 
 * Phase I: System Requirements
 * Phase II: Software Requirements
@@ -867,7 +882,11 @@ _Beispiel_
 * Wasserfallmodelle werden allgemein dort vorteilhaft angewendet, wo sich Anforderungen, Leistungen und Abläufe in der Planungsphase relativ präzise beschreiben lassen.
 * kann maximal eine Phase zurück springen, um zu fixen
 
-### V-Modell
+[nach oben](#software-engineering)
+
+---
+
+### [V-Modell](https://en.wikipedia.org/wiki/V-Model)
 (Erst was, dann wie)
 ```
 Anforderungsdefinition (Was?)                    <->                    Abnahmetest (durch Kunden)
@@ -877,6 +896,8 @@ Anforderungsdefinition (Was?)                    <->                    Abnahmet
                                             Implementation
 ```
 __auf Konsistenz achten!__
+* betont die Tests
+*
 
 [nach oben](#software-engineering)
 
@@ -918,6 +939,9 @@ __auf Konsistenz achten!__
 ## Prozessmodelle
 (erlaubt jedes Vorgehensmodell)
 
+### Conway's Law
+„Organisationen, die Systeme modellieren, […] sind auf Modelle festgelegt, welche die Kommunikationsstrukturen dieser Organisationen abbilden.“
+
 * zusätzlich angepasst auf das Produkt, welches Vorgehen sich anbietet und welche Organisationsmodell sich anbietet, um das Vorgehen umzusetzen
 
 * rational Unify Process
@@ -934,46 +958,111 @@ __auf Konsistenz achten!__
 
 ## Agile Modelle
 
-### Agiles Manifest
+* Menschen, Kunden, Kommunikation, laufende Software und Reaktion auf Änderungen sind zentrale Faktoren
+* iterative Arbeitsabläufe
+* inkrementelle Auslieferung von funktionierender Software
+* kurze Iterationen, parallele Arbeitsschritte
 
+### [Agiles Manifest](http://agilemanifesto.org)
+
+__Individuals and interactions__ over processes and tools
+* _Menschen und die Zusammenarbeit mit/zwischen diesen sind wichtiger als das starre Festhalten an Prozessen oder Werkzeugen_
+
+__Working software__ over comprehensive documentation
+* _Schnell eine lauffähige Software zu entwicklen ist wichtiger, als zu viel Zeit für umfangreiche (z.T. überflüssige) Dokumentation aufzuwenden_
+
+__Customer collaboration__ over contract negotiation
+* _eine enge Zusammenarbeit mit dem Kunden ist wichtiger als Vertragsverhandlungen, die vorab alles festklopfen_
+
+__Responding to change__ over following a plan
+* _eine enge Zusammenarbeit mit dem Kunden ist wichtiger als Vertragsverhandlungen, die vorab alles festklopfen_
+
+[nach oben](#software-engineering)
+
+---
+### Best Practices
+
+* Entwickle iterativ
+* Modelliere graphisch
+* Überwache Erfüllung der Anforderungen
+* Verfolge Änderungen
+* Schließe jeden Schritt mit Qualitätsprüfung ab
+* Verwende eine komponentenbasierte Version
+* Entwickle nur was zur Lösung notwendig
+* Konzentriere Dich auf die wesentlichen Ergebnisse und weniger darauf, wie sie erzielt werden
+* Vermeide unnötige Dokumente
+* Passe Dich an den Entwicklungsstand an
+* Lerne von Fehlern
+* Überprüfe regelmäßig die Risiken des Projektes
+* Entwickle objektivierbare Kriterien zur Messung des Projektfortschrittes
+* Versuche Routinearbeit zu automatisieren
+* Arbeite nach Plan
 
 [nach oben](#software-engineering)
 
 ---
 
-#### extreme Programming (xP)
+### extreme Programming (xP)
 * erstes agiles Modell?
 * tailoring?
+* kleinere Projekte 5 - 15 Personen
 * setzt agiles Manifest um
 
+#### Kernwerte:
+* Einfachheit (simplicity)
+* Mut (courage)
+* Kommunikation (communication)
+* Kundenrückmeldung (feedback)
+
+#### Prinzipien:
+* Unmittelbares Feedback (Rapid Feedback)
+* Einfachheit anstreben (Assume Simplicty)
+* Inkrementelle Veränderung (Incremental Change)
+* Veränderung wollen (Embracing Change)
+* Qualitätsarbeit (Quality Work)
+* Lernen lehren (Teach Learning)
+* Die weiteren XP Prinzipien:
+* Geringe Anfangsinvestition (Small Initial Investment)
+* Auf Sieg spielen (Play to win)
+* Gezielte Experimente (concrete Experiments)
+* Offene, aufrichtige Kommunikation (Open, honest Communication)
+* Die Instinkte des Teams nutzen, nicht dagegen arbeiten (Work with people ́s instincts, not against them)
+* Verantwortung übernehmen (Accept Responsibility)
+* An örtliche Gegebenheiten anpassen (Local Adaptations) Mit leichtem Gepäck reisen (Travel light)
+* Ehrliches Messen (Honest Measurements)
+
+#### Praktikten
+* Pairprogramming
+* Stories
+* ...
 
 [nach oben](#software-engineering)
 
 ---
 
-#### Scrum
-  * Product-Owner: Weiß, was er haben will
-          * Product Backlog:
-            * Schreibt Userstories rein
-            * Tasks, die das System beschreiben
-              * Sprint Backlog:
-                * in jedem Sprint-Zyklus werden so und so viele Tasks aus dem Product Backlog genommen und verarbeitet
-                * keine neuen Story-Points während eines Sprints
-              * Sprint 1-4 Wochen 
-                * in einem Sprint arbeiten die Mitarbeiter ungestört an dem Sprint Backlock
-              * Daily Scrum:
-                * Besprechung was getan wurde, was getan wird, gab es Probleme
-                * das was ich gestern gesagt hab und was ich am nächsten Tag geschafft habe, sollten optimalerweise zusammenliegen
-        * Scrum-Master: Hat die Scrum-Skillz, hält Probleme vom Team fern
-          * Sprint-Retrospektive:
-            * was hat gut, was nicht so gut geklappt?
-          * Sprint-Review:
-            * präsentiere Sprint dem Product-Owner
-            * neue Features, oder eilige Sachen können nun hinzugefügt werden
-        * Burndown-Chart:
-          * x: Zeit, y: Story-Points
-        * Definition of Done:
-          * wenn der Entwickler sagt: es ist fertig
+### Scrum
+  * **Product-Owner**: Weiß, was er haben will
+    * **Product Backlog**:
+      * Schreibt Userstories rein
+      * Tasks, die das System beschreiben
+    * **Sprint Backlog**:
+      * in jedem Sprint-Zyklus werden so und so viele Tasks aus dem Product Backlog genommen und verarbeitet
+      * keine neuen Story-Points während eines Sprints (in Sprint-Backlock)
+    * **Sprint** 1-4 Wochen
+      * in einem Sprint arbeiten die Mitarbeiter ungestört an dem Sprint Backlog
+    * **Daily Scrum**:
+      * Besprechung was getan wurde, was getan wird, gab es Probleme
+      * das was ich gestern gesagt hab und was ich am nächsten Tag geschafft habe, sollten optimalerweise zusammenliegen
+    * **Scrum-Master**: Hat die Scrum-Skillz, hält Probleme vom Team fern
+    * **Sprint-Retrospektive**:
+      * was hat gut, was nicht so gut geklappt?
+    * **Sprint-Review**:
+        * präsentiere Sprint dem Product-Owner
+        * neue Features, oder eilige Sachen können nun hinzugefügt werden
+    * **Burndown-Chart**:
+      * x: Zeit, y: Story-Points
+    * **Definition of Done**:
+      * wenn der Entwickler sagt: es ist fertig
 
 [nach oben](#software-engineering)
 
@@ -993,54 +1082,14 @@ Design  |   Implementation    |   Test|
     * z.B. 2 statt einem Implementationsstrang ... (besser aufteilen ...)
     * z.B. Tester überfordert - 2. Tester dazunehmen
   * Cost-of-Delay (also die Tickets priorisieren, die bei delay am teuersten sind)
-    * gleichgroße Happen machen (damit man sie besser gleichzeitig machen kann)
-
-  * Microsoft-Modell
-    * bla
-
-
-
+    * gleichgroße Happen machen (damit man sie besser gleichzeitig abarbeiten kann)
 
 [nach oben](#software-engineering)
 
 ---
 
-### Klausur?
+### Microsoft-Modell
 
-- Fehler in einem UML-Diagramm suchen?
-- Aktivitätsdiagramm erstellen?
-- Vergleichen inkrementell/evolutionär
-- Ein Szenario einem Modell zuordnen
-- Scrum/Kanban?
-- Agiles Manifest auswendig lernen /sonst Klausur doof
+* bla
 
-# 09.02.2018 - Übung 11:
-
-
-
-
--> Netzplan? Vorgangsliste machen - dann einfacher.
--> Ausgabe & Abfrage: Function Points:
-egal
-//  -> external inquery:            Daten müssen prozessiert werden
-//  -> external output:             Daten müssen verarbeitet werden
-
-
-* DELTA-Mechanismus:
-
-Hallo
-
-(+Welt)
-<-
-->
-(-Welt)
-
-Hallo
-Welt
-
-* Snapshot Verfahren:
-
-
----
-
-  
+[nach oben](#software-engineering)
